@@ -3,6 +3,8 @@ import "./globals.css";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { ThemeProvider } from "@/components/ThemeProvider";
+import { CartProvider } from "@/context/CartContext";
+import SessionProviderWrapper from "@/components/SessionProviderWrapper";
 import CustomCursor from "@/components/CustomCursor";
 import WhatsAppButton from "@/components/WhatsAppButton";
 import PageLoader from "@/components/PageLoader";
@@ -54,12 +56,16 @@ export default function RootLayout({
       </head>
       <body className="font-sans">
         <ThemeProvider>
-          <PageLoader />
-          <CustomCursor />
-          <Navbar />
-          <main className="min-h-screen">{children}</main>
-          <Footer />
-          <WhatsAppButton />
+          <SessionProviderWrapper>
+          <CartProvider>
+            <PageLoader />
+            <CustomCursor />
+            <Navbar />
+            <main className="min-h-screen">{children}</main>
+            <Footer />
+            <WhatsAppButton />
+          </CartProvider>
+          </SessionProviderWrapper>
         </ThemeProvider>
       </body>
     </html>
