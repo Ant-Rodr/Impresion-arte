@@ -1,0 +1,229 @@
+@import "tailwindcss";
+
+@variant dark (&:where(.dark, .dark *));
+
+@theme {
+  --color-primary: #6C3CE1;
+  --color-primary-light: #8B5CF6;
+  --color-primary-dark: #5B21B6;
+  --color-accent: #06D6A0;
+  --color-accent-dark: #059669;
+  --color-dark-bg: #0A0A0F;
+  --color-dark-card: #12121A;
+  --color-dark-border: #1E1E2E;
+  --color-light-bg: #FAFAFA;
+  --color-light-card: #FFFFFF;
+  --color-light-border: #E5E7EB;
+  --font-sans: "DM Sans", system-ui, -apple-system, sans-serif;
+  --font-display: "Pacifico", cursive;
+  --font-heading: "Raleway", system-ui, sans-serif;
+}
+
+@layer base {
+  * {
+    @apply box-border;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-light-bg text-gray-900 antialiased transition-colors duration-300;
+    font-family: var(--font-sans);
+  }
+
+  .dark body {
+    @apply bg-dark-bg text-gray-100;
+  }
+
+  h1 {
+    font-family: var(--font-display);
+  }
+
+  h2, h3, h4 {
+    font-family: var(--font-heading);
+  }
+}
+
+@layer components {
+  .btn-primary {
+    @apply inline-flex items-center justify-center px-6 py-3 bg-primary text-white font-semibold rounded-xl
+           hover:bg-primary-light transition-all duration-300 shadow-lg shadow-primary/25
+           hover:shadow-xl hover:shadow-primary/30 hover:-translate-y-0.5 active:translate-y-0;
+  }
+
+  .btn-secondary {
+    @apply inline-flex items-center justify-center px-6 py-3 border-2 border-primary text-primary font-semibold rounded-xl
+           hover:bg-primary hover:text-white transition-all duration-300;
+  }
+
+  .btn-accent {
+    @apply inline-flex items-center justify-center px-6 py-3 bg-accent text-gray-900 font-semibold rounded-xl
+           hover:bg-accent-dark hover:text-white transition-all duration-300 shadow-lg shadow-accent/25;
+  }
+
+  .card {
+    @apply bg-light-card rounded-2xl border border-light-border shadow-sm
+           hover:shadow-lg transition-all duration-300 hover:-translate-y-1;
+  }
+
+  .dark .card {
+    @apply bg-dark-card border-dark-border;
+  }
+
+  .glass {
+    @apply bg-white/80 backdrop-blur-xl border border-white/20;
+  }
+
+  .dark .glass {
+    @apply bg-gray-900/80 border-gray-700/30;
+  }
+
+  .gradient-text {
+    @apply bg-gradient-to-r from-primary via-primary-light to-accent bg-clip-text text-transparent;
+  }
+
+  .section-padding {
+    @apply px-4 sm:px-6 lg:px-8 py-16 sm:py-20 lg:py-24;
+  }
+
+  .glow {
+    box-shadow: 0 0 60px rgba(108, 60, 225, 0.15), 0 0 120px rgba(6, 214, 160, 0.08);
+  }
+
+  .dark .glow {
+    box-shadow: 0 0 60px rgba(108, 60, 225, 0.25), 0 0 120px rgba(6, 214, 160, 0.12);
+  }
+}
+
+/* ── Scrollbar ─────────────────────────────────────────────── */
+::-webkit-scrollbar { width: 8px; }
+::-webkit-scrollbar-track { @apply bg-light-bg; }
+.dark ::-webkit-scrollbar-track { @apply bg-dark-bg; }
+::-webkit-scrollbar-thumb { @apply bg-gray-300 rounded-full; }
+.dark ::-webkit-scrollbar-thumb { @apply bg-gray-700 rounded-full; }
+::-webkit-scrollbar-thumb:hover { @apply bg-primary; }
+
+/* ── Letter reveal ─────────────────────────────────────────── */
+@keyframes letter-in {
+  from {
+    opacity: 0;
+    transform: translateY(28px) rotate(-4deg);
+    filter: blur(5px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) rotate(0deg);
+    filter: blur(0);
+  }
+}
+
+.letter-in {
+  display: inline-block;
+  opacity: 0;
+  animation: letter-in 0.45s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+/* ── Animations ────────────────────────────────────────────── */
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50%       { transform: translateY(-20px); }
+}
+
+@keyframes pulse-glow {
+  0%, 100% { box-shadow: 0 0 20px rgba(108, 60, 225, 0.2); }
+  50%       { box-shadow: 0 0 40px rgba(108, 60, 225, 0.4); }
+}
+
+.animate-float       { animation: float 6s ease-in-out infinite; }
+.animate-pulse-glow  { animation: pulse-glow 3s ease-in-out infinite; }
+
+/* ── Ticker ────────────────────────────────────────────────── */
+@keyframes ticker-scroll {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+.ticker-scroll { animation: ticker-scroll 35s linear infinite; }
+
+/* ── Scroll reveal ─────────────────────────────────────────── */
+.reveal {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+.reveal-delay-1 { transition-delay: 0.1s; }
+.reveal-delay-2 { transition-delay: 0.2s; }
+.reveal-delay-3 { transition-delay: 0.3s; }
+.reveal-delay-4 { transition-delay: 0.4s; }
+
+/* ── Custom cursor ─────────────────────────────────────────── */
+.custom-cursor-active * { cursor: none !important; }
+
+.cursor-dot {
+  position: fixed;
+  top: 0; left: 0;
+  width: 8px; height: 8px;
+  background: #7c3aed;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 9999;
+  will-change: transform;
+}
+
+.cursor-ring {
+  position: fixed;
+  top: 0; left: 0;
+  width: 40px; height: 40px;
+  border: 1.5px solid rgba(124, 58, 237, 0.5);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 9998;
+  will-change: transform;
+  transition: width 0.2s, height 0.2s, border-color 0.2s, margin 0.2s;
+}
+
+.cursor-ring.cursor-ring-hover {
+  width: 52px; height: 52px;
+  border-color: rgba(16, 185, 129, 0.6);
+  margin-top: -6px; margin-left: -6px;
+}
+
+/* ── Hero noise overlay ────────────────────────────────────── */
+.hero-noise::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-repeat: repeat;
+  background-size: 128px 128px;
+  opacity: 0.035;
+  pointer-events: none;
+  z-index: 1;
+}
+
+@keyframes ticker {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+.animate-ticker {
+  animation: ticker 40s linear infinite;
+}
+
+.animate-ticker:hover {
+  animation-play-state: paused;
+}
+
+@keyframes fade-in {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.animate-fade-in {
+  animation: fade-in 0.3s ease-out forwards;
+}
