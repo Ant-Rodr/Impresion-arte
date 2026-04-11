@@ -1,6 +1,8 @@
 import { Resend } from "resend";
 
-export const resend = new Resend(process.env.RESEND_API_KEY);
+function getResend() {
+  return new Resend(process.env.RESEND_API_KEY);
+}
 
 export async function sendContactEmail(data: {
   name: string;
@@ -13,6 +15,7 @@ export async function sendContactEmail(data: {
     return { success: true, simulated: true };
   }
 
+  const resend = getResend();
   return resend.emails.send({
     from: process.env.EMAIL_FROM ?? "noreply@impresion-arte.es",
     to: process.env.EMAIL_TO ?? "info@impresion-arte.es",
@@ -45,6 +48,7 @@ export async function sendOrderEmail(data: {
     return { success: true, simulated: true };
   }
 
+  const resend = getResend();
   // Email al negocio
   await resend.emails.send({
     from: process.env.EMAIL_FROM ?? "noreply@impresion-arte.es",
