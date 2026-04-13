@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { Suspense } from "react";
+import SuccessClient from "./SuccessClient";
 
 export const metadata: Metadata = {
   title: "Pago completado | Impresion-arte",
@@ -18,12 +20,17 @@ export default function PagoExitoPage() {
         </div>
 
         <h1 className="text-3xl font-black mb-3">¡Pago completado!</h1>
-        <p className="text-gray-500 dark:text-gray-400 mb-8 leading-relaxed">
+        <p className="text-gray-500 dark:text-gray-400 mb-2 leading-relaxed">
           Hemos recibido tu pedido correctamente. Te enviaremos un email de confirmación
           con los detalles y el seguimiento en breve.
         </p>
 
-        <div className="card p-5 text-left mb-8 space-y-3">
+        {/* Ref del pedido (cliente) */}
+        <Suspense fallback={null}>
+          <SuccessClient />
+        </Suspense>
+
+        <div className="card p-5 text-left mb-8 space-y-3 mt-8">
           <div className="flex items-center gap-3 text-sm">
             <div className="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center shrink-0">
               <svg className="w-4 h-4 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
